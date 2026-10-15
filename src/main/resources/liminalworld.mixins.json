@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.example.liminalworld.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "liminalworld.refmap.json",
+  "mixins": [
+    "NoiseBasedChunkGeneratorMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

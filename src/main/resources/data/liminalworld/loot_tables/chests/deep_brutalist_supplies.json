@@ -1,0 +1,45 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "name": "deep_brutalist_high_tier",
+      "rolls": { "min": 2.0, "max": 5.0 },
+      "entries": [
+        {
+          "type": "minecraft:tag",
+          "name": "forge:ingots",
+          "expand": true,
+          "weight": 30,
+          "functions": [
+            { "function": "minecraft:set_count", "count": { "min": 3.0, "max": 8.0 } }
+          ]
+        },
+        {
+          "type": "minecraft:tag",
+          "name": "forge:gems",
+          "expand": true,
+          "weight": 25,
+          "functions": [
+            { "function": "minecraft:set_count", "count": { "min": 1.0, "max": 4.0 } }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:echo_shard",
+          "weight": 15,
+          "functions": [
+            { "function": "minecraft:set_count", "count": { "min": 1.0, "max": 3.0 } }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:golden_apple",
+          "weight": 12,
+          "functions": [
+            { "function": "minecraft:set_count", "count": { "min": 1.0, "max": 2.0 } }
+          ]
+        }
+      ]
+    }
+  ]
+}

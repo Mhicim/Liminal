@@ -1,0 +1,45 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "name": "poolrooms_supplies_pool",
+      "rolls": { "min": 2.0, "max": 4.0 },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:prismarine_crystals",
+          "weight": 20,
+          "functions": [
+            { "function": "minecraft:set_count", "count": { "min": 2.0, "max": 6.0 } }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:sponge",
+          "weight": 10,
+          "functions": [
+            { "function": "minecraft:set_count", "count": { "min": 1.0, "max": 2.0 } }
+          ]
+        },
+        {
+          "type": "minecraft:tag",
+          "name": "forge:foods",
+          "expand": true,
+          "weight": 25,
+          "functions": [
+            { "function": "minecraft:set_count", "count": { "min": 1.0, "max": 4.0 } }
+          ]
+        },
+        {
+          "type": "minecraft:tag",
+          "name": "forge:gems",
+          "expand": true,
+          "weight": 20,
+          "functions": [
+            { "function": "minecraft:set_count", "count": { "min": 1.0, "max": 3.0 } }
+          ]
+        }
+      ]
+    }
+  ]
+}
