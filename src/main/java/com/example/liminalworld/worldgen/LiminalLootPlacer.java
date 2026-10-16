@@ -31,18 +31,29 @@ public class LiminalLootPlacer {
             boolean isDeadEnd,
             String themeName
     ) {
-        long stashHash = hashCoords(seed ^ 0x5DEECE66DL, worldCellX, floor, worldCellZ);
+        long stashHash = hashCoords(seed ^ 0x5DEECE66DL, worldCellX, floor + baseY, worldCellZ);
         int chance = Math.abs((int) (stashHash % 100));
 
-        // В тупиках шанс спавна припасов 65%, в обычных залах и коридорах — 8%
-        int threshold = isDeadEnd ? 65 : 8;
+        int threshold = isDeadEnd ? 45 : 12;
         if (chance >= threshold) {
             return;
         }
 
-        int lootY = baseY + 3;
-        int centerX = localStartX + 4;
-        int centerZ = localStartZ + 4;
+        // Размещаем припасы либо на 1-м ярусе этажа (baseY + 3), либо на антресоли 2-го яруса (baseY + 8)
+        boolean placeOnMezzanine = ((stashHash >> 5) & 1) == 1;
+        int lootY = placeOnMezzanine ? (baseY + 8) : (baseY + 3);
+        int centerX = 2;
+        int centerZ = 2;
+
+        // Проверяем, что под контейнером есть твердый пол
+        BlockPos floorCheckPos = new BlockPos(
+                chunk.getPos().getMinBlockX() + centerX,
+                lootY - 1,
+                chunk.getPos().getMinBlockZ() + centerZ
+        );
+        if (chunk.getBlockState(floorCheckPos).isAir()) {
+            lootY = baseY + 3;
+        }
 
         BlockPos palletPos = new BlockPos(
                 chunk.getPos().getMinBlockX() + centerX,
@@ -57,7 +68,6 @@ public class LiminalLootPlacer {
                     .setValue(LanternBlock.HANGING, false), false);
         }
 
-        // 1. Бочка с кастомной теговой таблицей лута (#forge:foods, #forge:ingots и т.д.)
         BlockPos barrelPos = new BlockPos(
                 chunk.getPos().getMinBlockX() + centerX,
                 lootY,
@@ -65,8 +75,7 @@ public class LiminalLootPlacer {
         );
         placeLootBarrel(chunk, barrelPos, selectCustomLootTable(themeName, baseY), stashHash);
 
-        // 2. Сундук с ванильным ID таблицы для срабатывания GlobalLootModifiers из модов
-        if (isDeadEnd || (Math.abs(stashHash >> 8) % 100) < 40) {
+        if (isDeadEnd || (Math.abs(stashHash >> 8) % 100) < 45) {
             BlockPos chestPos = new BlockPos(
                     chunk.getPos().getMinBlockX() + centerX - 1,
                     lootY,
@@ -79,7 +88,6 @@ public class LiminalLootPlacer {
     private static void placeLootBarrel(ChunkAccess chunk, BlockPos worldPos, ResourceLocation lootTable, long lootSeed) {
         BlockState barrelState = Blocks.BARREL.defaultBlockState()
                 .setValue(BarrelBlock.FACING, Direction.UP);
-
         chunk.setBlockState(worldPos, barrelState, false);
 
         BarrelBlockEntity barrelEntity = new BarrelBlockEntity(worldPos, barrelState);
@@ -90,7 +98,6 @@ public class LiminalLootPlacer {
     private static void placeModCompatibleChest(ChunkAccess chunk, BlockPos worldPos, ResourceLocation lootTable, long lootSeed) {
         BlockState chestState = Blocks.CHEST.defaultBlockState()
                 .setValue(ChestBlock.FACING, Direction.SOUTH);
-
         chunk.setBlockState(worldPos, chestState, false);
 
         ChestBlockEntity chestEntity = new ChestBlockEntity(worldPos, chestState);
@@ -99,22 +106,29 @@ public class LiminalLootPlacer {
     }
 
     private static ResourceLocation selectCustomLootTable(String themeName, int y) {
-        if (y < 0) return DEEP_BRUTALIST_SUPPLIES;
-        if ("POOLROOMS".equals(themeName)) return POOLROOMS_SUPPLIES;
+        if (y < 0 || "INDUSTRIAL_PIPES".equals(themeName) || "ANOMALOUS_RED_HALLS".equals(themeName)) {
+            return DEEP_BRUTALIST_SUPPLIES;
+        }
+        if ("POOLROOMS_AQUEDUCT".equals(themeName)) {
+            return POOLROOMS_SUPPLIES;
+        }
         return LEVEL_0_SUPPLIES;
     }
 
     private static ResourceLocation selectVanillaHookTable(String themeName, int y) {
-        if (y < -20) {
+        if (y < -400) {
             return BuiltInLootTables.ANCIENT_CITY;
         }
-        if (y < 20) {
-            return BuiltInLootTables.SIMPLE_DUNGEON;
+        if (y < 0) {
+            return BuiltInLootTables.STRONGHOLD_CORRIDOR;
         }
-        if ("POOLROOMS".equals(themeName)) {
+        if ("ARCHIVE_CATACOMBS".equals(themeName)) {
+            return BuiltInLootTables.STRONGHOLD_LIBRARY;
+        }
+        if ("POOLROOMS_AQUEDUCT".equals(themeName)) {
             return BuiltInLootTables.UNDERWATER_RUIN_BIG;
         }
-        if ("OVERGROWN_ATRIUM".equals(themeName)) {
+        if ("OVERGROWN_CONCRETE".equals(themeName)) {
             return BuiltInLootTables.JUNGLE_TEMPLE;
         }
         return BuiltInLootTables.ABANDONED_MINESHAFT;

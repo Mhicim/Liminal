@@ -1,6 +1,8 @@
 {
   "pack": {
-    "description": "Liminal World Megastructure Resources",
+    "description": {
+      "text": "Made in Abyss: Endless Chasm resources"
+    },
     "pack_format": 15
   }
 }

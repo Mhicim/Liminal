@@ -1,6 +1,6 @@
 package com.example.liminalworld.mixin;
 
-import com.example.liminalworld.worldgen.MegastructureGenerator;
+import com.example.liminalworld.worldgen.AbyssWorldGenerator;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.world.level.LevelHeightAccessor;
@@ -36,7 +36,7 @@ public abstract class NoiseBasedChunkGeneratorMixin {
             CallbackInfo ci
     ) {
         if (this.settings.is(NoiseGeneratorSettings.OVERWORLD)) {
-            MegastructureGenerator.buildChunk(chunk, level.getSeed());
+            AbyssWorldGenerator.buildAbyssChunk(level.registryAccess(), random, chunk, level.getSeed());
         }
     }
 
@@ -65,7 +65,7 @@ public abstract class NoiseBasedChunkGeneratorMixin {
             CallbackInfoReturnable<Integer> cir
     ) {
         if (this.settings.is(NoiseGeneratorSettings.OVERWORLD)) {
-            cir.setReturnValue(MegastructureGenerator.MAX_Y + 1);
+            cir.setReturnValue(AbyssWorldGenerator.getDistributedAbyssStructureY(x, z));
         }
     }
 }
