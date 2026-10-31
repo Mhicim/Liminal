@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    "IRI",
+    " C "
+  ],
+  "key": {
+    "I": { "item": "minecraft:iron_ingot" },
+    "R": { "item": "minecraft:compass" },
+    "C": { "item": "minecraft:copper_ingot" }
+  },
+  "result": {
+    "item": "megastrata:sector_scanner",
+    "count": 1
+  }
+}

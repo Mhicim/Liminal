@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "megastrata:block/water_pump_controller"
+    }
+  }
+}

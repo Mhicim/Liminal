@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "LSL",
+    "III",
+    " C "
+  ],
+  "key": {
+    "L": { "item": "minecraft:leather" },
+    "S": { "item": "minecraft:string" },
+    "I": { "item": "minecraft:iron_ingot" },
+    "C": { "item": "minecraft:chain" }
+  },
+  "result": {
+    "item": "megastrata:safety_harness",
+    "count": 1
+  }
+}

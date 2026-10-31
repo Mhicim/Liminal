@@ -7,7 +7,9 @@ modId="${mod_id}"
 version="${mod_version}"
 displayName="${mod_name}"
 authors="${mod_authors}"
-description='''${mod_description}'''
+description='''
+MEGASTRATA v3.0: Оригинальная атмосфера первой версии с густым белым туманом без смены дня и ночи, все старые структуры из концепт-документа, пронизывающий все слои от -2000 до +2000 панельный ГИГАХРУЩ и огромные снежные равнины между комплексами зданий со спавном структур Верхнего мира.
+'''
 
 [[dependencies.${mod_id}]]
     modId="forge"

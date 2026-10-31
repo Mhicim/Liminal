@@ -1,0 +1,10 @@
+{
+  "type": "megastrata:megastrata_type",
+  "generator": {
+    "type": "megastrata:megastructure_generator",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "minecraft:snowy_plains"
+    }
+  }
+}
